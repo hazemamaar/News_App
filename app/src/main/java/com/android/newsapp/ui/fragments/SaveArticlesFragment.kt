@@ -15,6 +15,7 @@ import com.android.newsapp.databinding.FragmentSaveArticlesBinding
 import com.android.newsapp.ui.activities.MainActivity
 import com.android.newsapp.ui.adapters.NewsAdapter
 import com.android.newsapp.ui.viewmodel.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class SaveArticlesFragment : Fragment() {
 
@@ -44,7 +45,12 @@ class SaveArticlesFragment : Fragment() {
                val position =viewHolder.adapterPosition
                 val article =newsAdapter.artivles[position]
                 newsViewModel.deleteArticle(article)
-
+                Snackbar.make(view, "Successfully deleted article", Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo") {
+                        newsViewModel.saveArticle(article)
+                    }
+                    show()
+                }
             }
 
         }

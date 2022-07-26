@@ -22,6 +22,7 @@ import com.android.newsapp.repo.NewsRepo
 import com.android.newsapp.ui.viewmodel.NewsViewModel
 import com.android.newsapp.ui.viewmodel.NewsViewModelProvider
 import com.android.newsapp.util.Resource
+import com.example.storeapp.uitils.ConnectionLiveData
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,10 +30,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
+    private lateinit var connectionLiveData: ConnectionLiveData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        connectionLiveData= ConnectionLiveData(this)
+        connectionLiveData.observe(this,{networkAvailable->
+            if (!networkAvailable){
+                Toast.makeText(this, "No connection", Toast.LENGTH_SHORT).show()
+
+                //navController.navigate(R.id.noInternetConnectionDialog)
+            }
+        })
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.frag_host_pro) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
@@ -40,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         val newsViewModelProvider = NewsViewModelProvider(repo)
         newsViewModel =
             ViewModelProvider(this, newsViewModelProvider).get(NewsViewModel::class.java)
+
 
     }
 }

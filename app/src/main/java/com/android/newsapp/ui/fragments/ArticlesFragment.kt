@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.newsapp.R
@@ -14,6 +15,7 @@ import com.android.newsapp.databinding.FragmentBreakingNewsBinding
 import com.android.newsapp.ui.activities.MainActivity
 import com.android.newsapp.ui.adapters.NewsAdapter
 import com.android.newsapp.ui.viewmodel.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ArticlesFragment : Fragment() {
@@ -33,6 +35,11 @@ class ArticlesFragment : Fragment() {
         }
         binding.fab.setOnClickListener(View.OnClickListener {
             newsViewModel.saveArticle(article)
+            Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
+        })
+        binding.backIcon.setOnClickListener(View.OnClickListener {
+             findNavController().popBackStack()
+
         })
     }
     override fun onCreateView(
