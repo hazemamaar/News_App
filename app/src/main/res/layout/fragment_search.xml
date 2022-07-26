@@ -4,18 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.SearchFragment">
-
-    <EditText
-        android:id="@+id/etSearch"
+    tools:context=".ui.fragments.SearchFragment"
+    android:background="@color/blue"
+    >
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputTextLayoutSearch"
+        style="@style/text_input_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:hintTextColor="@color/blue__"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:startIconDrawable="@drawable/ic_search"
+        android:layout_marginTop="15dp"
+        >
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="17sp"
+            android:paddingTop="21sp"
+            android:textColor="@color/blue__"
+            android:textCursorDrawable="@null"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchNews"
         android:layout_width="match_parent"
@@ -23,6 +39,6 @@
         android:paddingBottom="50dp"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSearch"
+        app:layout_constraintTop_toBottomOf="@+id/inputTextLayoutSearch"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

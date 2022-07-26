@@ -22,10 +22,10 @@ class NewsViewModel(
 
     // val breakingNewsData =_breakingNewsData.asFlow()
     var breakingNewPage = 1
+    var breakingArticles: NewsModel? = null
     val searchingNewsData: MutableLiveData<Resource<NewsModel>> = MutableLiveData()
-
-    // val breakingNewsData =_breakingNewsData.asFlow()
     var searchingNewPage = 1
+    var searchArticles: NewsModel? = null
 
     init {
 
@@ -48,22 +48,47 @@ class NewsViewModel(
         }
 
     private fun handleBreakingNewsResponse(response: Response<NewsModel>): Resource<NewsModel> {
+
         if (response.isSuccessful) {
             response.body()?.let { newsResponse ->
-                return Resource.Success(newsResponse)
+                breakingNewPage++
+                if (breakingArticles == null) {
+                    breakingArticles = newsResponse
+                } else {
+                    val oldArticles = breakingArticles?.articles
+                    val newArticles = newsResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+
+                return Resource.Success(breakingArticles ?: newsResponse)
             }
         }
         return Resource.Error(response.message())
     }
+
     private fun handleSearchingNewsResponse(response: Response<NewsModel>): Resource<NewsModel> {
         if (response.isSuccessful) {
             response.body()?.let { newsResponse ->
-                return Resource.Success(newsResponse)
+                searchingNewPage++
+                if (searchArticles == null) {
+                    searchArticles = newsResponse
+                } else {
+                    val oldArticles = searchArticles?.articles
+                    val newArticles = newsResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+
+                return Resource.Success(searchArticles ?: newsResponse)
             }
         }
         return Resource.Error(response.message())
     }
-    fun saveArticle(article: Article)=viewModelScope.launch (IODispat){  newsRepo.insert(article)}
-    fun deleteArticle(article: Article)=viewModelScope.launch (IODispat){  newsRepo.delete(article)}
-    fun getAllArticle()=newsRepo.getAllArticles()
+
+    fun saveArticle(article: Article) =
+        viewModelScope.launch(IODispat) { newsRepo.insert(article) }
+
+    fun deleteArticle(article: Article) =
+        viewModelScope.launch(IODispat) { newsRepo.delete(article) }
+
+    fun getAllArticle() = newsRepo.getAllArticles()
 }

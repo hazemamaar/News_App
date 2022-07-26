@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.SaveArticlesFragment">
+    tools:context=".ui.fragments.SaveArticlesFragment"
+    android:background="@color/blue"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSavedNews"

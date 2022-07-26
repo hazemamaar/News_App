@@ -3,13 +3,20 @@
     <item
         android:id="@+id/breakingNewsFragment"
         android:enabled="true"
-        android:title="Home"/>
-    <item
-        android:id="@+id/searchFragment"
-        android:enabled="true"
-        android:title="search"/>
+        android:title="Home"
+        android:icon="@drawable/newspaper"
+        />
     <item
         android:id="@+id/saveArticlesFragment"
         android:enabled="true"
-        android:title="save"/>
+        android:title="save"
+
+        android:icon="@drawable/bookmark"
+        />
+    <item
+        android:id="@+id/searchFragment"
+        android:enabled="true"
+        android:title="search"
+        android:icon="@drawable/global"
+        />
 </menu>
